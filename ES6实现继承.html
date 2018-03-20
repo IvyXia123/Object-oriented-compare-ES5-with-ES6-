@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+
+        /**
+         * ES6实现继承：
+         */
+
+        //父类：
+        class Person{
+            constructor(name){
+                this.name=name;
+            }
+            showName(){
+                console.log("名字是："+this.name);
+            }
+        }
+
+        //子类-继承：
+        class Student extends Person{
+            constructor(name,age){
+                super(name);    //继承父类的属性
+                this.age=age;   //自己本身的属性
+            }
+            showName(){
+                super.showName();  //继承父级的showName方法
+
+                //在执行完父级的方法后，执行子级自己的方法
+                console.log("子类里的showName");
+            }
+            showAge(){
+                console.log("子类的年纪为："+this.age);
+            }
+        }
+
+        let stu1=new Student("小花",12);
+        stu1.showAge()
+    </script>
+</body>
+</html>

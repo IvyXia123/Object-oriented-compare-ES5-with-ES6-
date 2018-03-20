@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+
+        /**
+         * ES5实现继承：
+         * @param name
+         * @constructor
+         */
+
+        function Person(name) {
+            this.name=name;
+        }
+        Person.prototype.showName=function () {
+            console.log("名字是:"+this.name);
+        }
+        function Student(name,age) {
+            Person.call(this,name);   //继承属性
+            this.age=age;
+        }
+
+        Student.prototype=new Person();    //继承方法
+        var stu1=new Student("小花",12);
+        stu1.showName()
+
+    </script>
+</body>
+</html>

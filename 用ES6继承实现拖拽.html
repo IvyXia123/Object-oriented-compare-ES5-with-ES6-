@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            width:100px;
+            height:100px;
+            background:red;
+            position:absolute;
+            top:0;
+        }
+        .box1{
+            left:0;
+        }
+        .box2{
+            right:0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1">BOX1</div>
+    <div class="box2">BOX2</div>
+    <script>
+        //父类--普通的拖拽：
+        class Drag{
+            constructor(id){
+                this.oDiv=document.querySelector(id);
+                this.disX=0;
+                this.disY=0;
+                this.init();
+            }
+            init(){
+                this.oDiv.onmousedown=function (ev) {
+                    this.disX=ev.clientX-this.oDiv.offsetLeft;
+                    this.disY=ev.clientY-this.oDiv.offsetTop;
+
+                    document.onmousemove=this.fnMove.bind(this);
+                    document.onmouseup=this.fnUp.bind(this);
+
+                    return false;    //阻止默认事件（此处阻止默认选中文字）
+                }.bind(this);
+            }
+            fnMove(ev){
+                this.oDiv.style.left=ev.clientX-this.disX+"px";
+                this.oDiv.style.top=ev.clientY-this.disY+"px";
+            }
+            fnUp(){
+                document.onmousemove=null;;
+                document.onmouseup=null;;
+            }
+        }
+
+        //子类--限制范围的拖拽：
+        class limitedDrag extends Drag{
+            fnMove(ev){
+                super.fnMove(ev);  //继承父级的fnMove方法
+
+                //限制范围：
+                if(this.oDiv.offsetLeft<=0){
+                    this.oDiv.style.left=0;
+                }
+            }
+        }
+
+        new Drag(".box1");
+        new limitedDrag(".box2");
+    </script>
+</body>
+</html>
